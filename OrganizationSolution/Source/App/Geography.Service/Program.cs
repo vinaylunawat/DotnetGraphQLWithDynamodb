@@ -1,13 +1,11 @@
 namespace Geography.Service
-{
-    using Framework.Business.ServiceProvider.Storage;
+{    
     using Framework.Configuration;
     using Framework.Configuration.Models;
     using Geography.DataAccess;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.Hosting;
-    using System.Collections.Generic;
+    using Microsoft.Extensions.Hosting;    
     using System.Threading.Tasks;
 
     /// <summary>
@@ -44,7 +42,7 @@ namespace Geography.Service
         /// <returns>The <see cref="IHostBuilder"/>.</returns>
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-            .DefaultAppConfiguration(new[] { typeof(ApplicationOptions).Assembly, typeof(SecurityOptions).Assembly }, args)
+            .DefaultAppConfiguration(new[] { typeof(ApplicationOptions).Assembly }, args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();

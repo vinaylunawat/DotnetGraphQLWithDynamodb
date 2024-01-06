@@ -1,5 +1,6 @@
+using Framework.Configuration.Models;
 using Geography.DataAccess;
-using Microsoft.Extensions.Hosting;
+using Framework.Configuration;
 
 namespace Geography.Serverless;
 
@@ -31,7 +32,9 @@ public class LambdaEntryPoint :
     /// <param name="builder"></param>
     protected async override void Init(IWebHostBuilder builder)
     {
-        var host = CreateHostBuilder().Build();
+        var host = CreateHostBuilder()
+            .DefaultAppConfiguration(new[] { typeof(ApplicationOptions).Assembly })
+            .Build();
         using (var scope = host.Services.CreateScope())
         {
             var services = scope.ServiceProvider;

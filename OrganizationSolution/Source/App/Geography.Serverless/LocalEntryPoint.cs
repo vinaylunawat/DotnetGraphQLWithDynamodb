@@ -1,5 +1,7 @@
+using Framework.Configuration.Models;
 using Geography.DataAccess;
 using Microsoft.Extensions.Hosting;
+using Framework.Configuration;
 
 namespace Geography.Serverless;
 
@@ -27,6 +29,7 @@ public class LocalEntryPoint
 
     public static IHostBuilder CreateHostBuilder(string[] args) =>
         Host.CreateDefaultBuilder(args)
+            .DefaultAppConfiguration(new[] { typeof(ApplicationOptions).Assembly }, args)
             .ConfigureWebHostDefaults(webBuilder =>
             {
                 webBuilder.UseStartup<Startup>();
