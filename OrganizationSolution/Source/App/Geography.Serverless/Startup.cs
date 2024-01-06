@@ -25,7 +25,7 @@ public class Startup
     public void ConfigureServices(IServiceCollection services)
     {
         services.AddControllers();
-        //services.AddControllersWithViews().AddNewtonsoftJson();
+        services.AddControllersWithViews().AddNewtonsoftJson();
         services.AddAutoMapper(typeof(Startup));
         services.AddAutoMapper(typeof(CountryMappingProfile).Assembly);
         services.AddManagers(typeof(CountryManager).Assembly);

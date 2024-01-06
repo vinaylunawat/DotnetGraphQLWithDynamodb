@@ -1,13 +1,11 @@
 ﻿using Geography.Serverless.Model;
 using GraphQL;
 using GraphQL.Execution;
+using GraphQL.SystemTextJson;
 using GraphQL.Types;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
+using GraphQL.NewtonsoftJson;
+using NuGet.Protocol;
 
 namespace Geography.Service
 {
@@ -33,7 +31,7 @@ namespace Geography.Service
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> HandleRequest([FromBody] GraphQLModel query, CancellationToken cancellationToken)
         {
-            if (query == null)
+            if (query.Query == null)
             {
                 _logger.LogWarning("Empty GraphQL Query");
                 return BadRequest();
@@ -42,7 +40,7 @@ namespace Geography.Service
             var timedToken = GetTimedToken(cancellationToken);
             var executionOptions = new ExecutionOptions
             {
-                Variables = query.Variables?.ToObject<Inputs>(),
+                Variables = new GraphQL.NewtonsoftJson.GraphQLSerializer().Deserialize<Inputs>(query.Variables.ToJson()),
                 Schema = _schema,
                 Query = query.Query,
                 CancellationToken = timedToken,
