@@ -1,13 +1,9 @@
-﻿using Framework.DataAccess.Repository;
-using Framework.Service.Utilities.Criteria;
+﻿
 using Geography.Business.GraphQL;
-using Geography.Business.State;
 using Geography.Business.State.Manager;
 using Geography.Business.State.Models;
-using Geography.DataAccess;
 using GraphQL;
 using GraphQL.Types;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

@@ -39,8 +39,6 @@
 	<ItemGroup>
 		<ProjectReference Include="..\..\Framework\Framework.Business\Framework.Business.csproj" />
 		<ProjectReference Include="..\..\Framework\Framework.Configuration\Framework.Configuration.csproj" />
-		<ProjectReference Include="..\..\Framework\Framework.Migrations\Framework.Migrations.csproj" />
-		<ProjectReference Include="..\..\Framework\Framework.Security\Framework.Security.csproj" />
 		<ProjectReference Include="..\Geography.Business\Geography.Business.csproj" />
 		<ProjectReference Include="..\Geography.DataAccess\Geography.DataAccess.csproj" />
 	</ItemGroup>

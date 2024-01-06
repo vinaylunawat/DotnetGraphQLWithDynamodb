@@ -1,9 +1,4 @@
-﻿using Framework.Service.Utilities.Criteria;
-using Geography.Business.Country;
-using GraphQL;
-using GraphQL.Types;
-using System.Threading.Tasks;
-
+﻿using GraphQL.Types;
 namespace Geography.Business.State
 {
     public class StateType : ObjectGraphType<Entity.Entities.State>

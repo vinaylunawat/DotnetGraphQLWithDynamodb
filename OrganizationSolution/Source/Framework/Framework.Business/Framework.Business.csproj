@@ -36,7 +36,6 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\Framework.DataAccess\Framework.DataAccess.csproj" />
-		<ProjectReference Include="..\Framework.Security\Framework.Security.csproj" />
 	</ItemGroup>
 
 </Project>

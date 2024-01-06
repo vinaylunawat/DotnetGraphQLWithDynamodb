@@ -42,9 +42,7 @@
                     Description = string.Empty,
                     Contact = new OpenApiContact(),
                     License = new OpenApiLicense()
-                };
-
-                swaggerOptions.OperationFilter<AddTenantIdHeaderParameter>();
+                };                
                 swaggerOptions.SwaggerDoc(apiVersion, swaggerInfo);
 
                 foreach (var assembly in assemblies)

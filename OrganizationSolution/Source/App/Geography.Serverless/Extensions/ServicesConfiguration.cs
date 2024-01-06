@@ -1,13 +1,7 @@
 ﻿namespace Geography.Serverless.Extensions
 {
-    using Framework.Configuration.Models;
-    using Framework.Constant;
-    using Framework.Security;
-    using Framework.Security.Factory;
-    using Framework.Service;
-    using Geography.Business;    
-    using Geography.DataAccess;
-    using Microsoft.EntityFrameworkCore.Metadata.Internal;
+    using Framework.Configuration.Models;    
+    using Geography.DataAccess;    
     using Microsoft.Extensions.DependencyInjection;
 
     /// <summary>
@@ -40,20 +34,6 @@
             //services.AddSwaggerWithComments(ApiConstants.ApiName, ApiConstants.ApiVersion, swaggerAssemblies);
             //services.AddSwaggerWithComments(ApiConstants.JobsApiName, ApiConstants.JobsApiVersion, swaggerAssemblies);
             return services;
-        }
-
-        /// <summary>
-        /// The ConfigureJwtSecurity.
-        /// </summary>
-        /// <param name="services">The services<see cref="IServiceCollection"/>.</param>
-        /// <returns>The <see cref="IServiceCollection"/>.</returns>
-        public static IServiceCollection ConfigureJwtSecurity(this IServiceCollection services)
-        {
-            services.ConfigureSecurityServices();
-            var serviceProvider = services.BuildServiceProvider();
-            var securityOptions = serviceProvider.GetRequiredService<SecurityOptions>();
-            AuthenticationTechniqueFactory.GetAuthentication(AuthenticationTechnique.JWTToken, services, securityOptions.JwtIssuerOptions, securityOptions.AuthSettings);
-            return services;
-        }
+        }         
     }
 }
