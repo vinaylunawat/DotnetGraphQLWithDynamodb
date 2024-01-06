@@ -8,7 +8,9 @@ using Geography.DataAccess;
 using Framework.Business.ServiceProvider.Storage;
 using Geography.Business.Country.Manager;
 using Framework.Business;
+using Microsoft.IdentityModel.Logging;
 namespace Geography.Serverless;
+using Framework.Service.Extension;
 
 public class Startup
 {
@@ -35,8 +37,6 @@ public class Startup
         services.ConfigureClientServices();
         services.ConfigureGraphQLServices();
         services.ConfigureAwsCongnitoSecurity();
-        services.ConfigureSwagger();
-
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline
@@ -46,11 +46,14 @@ public class Startup
         {
             app.UseDeveloperExceptionPage();
         }
+        
+        app.AddProblemDetailsSupport();
 
         app.UseHttpsRedirection();
 
         app.UseRouting();
 
+        app.UseAuthentication();
         app.UseAuthorization();
 
         app.UseGraphQL<AppSchema>();

@@ -11,6 +11,9 @@
     /// </summary>
     public static class ServicesConfiguration
     {
+
+        public const string AuthenticationScheme = "Bearer";
+
         /// <summary>
         /// The ConfigureClientServices.
         /// </summary>
