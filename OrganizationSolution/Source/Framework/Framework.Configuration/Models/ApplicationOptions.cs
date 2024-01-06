@@ -14,6 +14,8 @@
         //public string ConnectionString { get; set; }
         public string ConnectionString { get; set; }
 
+        public string CognitoAuthorityURL { get; set; }
+
 
         /// <summary>
         /// Gets or sets a value indicating whether DeleteDefaultSchema.

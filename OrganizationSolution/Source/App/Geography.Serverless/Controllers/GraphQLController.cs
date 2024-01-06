@@ -13,7 +13,7 @@ namespace Geography.Service
 {
     [Route("api/graphql")]
     [ApiController]
-    //[Microsoft.AspNetCore.Authorization.Authorize(AccountConstants.AllUsers)]
+    [Microsoft.AspNetCore.Authorization.Authorize]
     public class GraphQLController : ControllerBase
     {
         private readonly IDocumentExecuter _documentExecuter;

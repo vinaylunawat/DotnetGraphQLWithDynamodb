@@ -1,8 +1,10 @@
 ﻿namespace Geography.Serverless.Extensions
 {
-    using Framework.Configuration.Models;    
-    using Geography.DataAccess;    
+    using Framework.Configuration.Models;
+    using Geography.DataAccess;
     using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.IdentityModel.Tokens;
+    using Microsoft.AspNetCore.Authentication.JwtBearer;
 
     /// <summary>
     /// Defines the <see cref="ServicesConfiguration" />.
@@ -20,7 +22,7 @@
             var applicationOptions = serviceProvider.GetRequiredService<ApplicationOptions>();
             return services
                 .ConfigureDbServices();
-                
+
         }
 
         /// <summary>
@@ -34,6 +36,30 @@
             //services.AddSwaggerWithComments(ApiConstants.ApiName, ApiConstants.ApiVersion, swaggerAssemblies);
             //services.AddSwaggerWithComments(ApiConstants.JobsApiName, ApiConstants.JobsApiVersion, swaggerAssemblies);
             return services;
-        }         
+        }
+
+        public static IServiceCollection ConfigureAwsCongnitoSecurity(this IServiceCollection services)
+        {
+            var serviceProvider = services.BuildServiceProvider();
+            var applicationOptions = serviceProvider.GetRequiredService<ApplicationOptions>();
+
+            services.AddCognitoIdentity();
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.Authority = applicationOptions.CognitoAuthorityURL;
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    ValidateAudience = false
+                };
+            });
+            return services;
+        }
     }
 }

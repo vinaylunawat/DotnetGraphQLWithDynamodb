@@ -34,6 +34,7 @@ public class Startup
         services.AddScoped(typeof(IStorageManager<AmazonS3ConfigurationOptions>), typeof(StorageManager));        
         services.ConfigureClientServices();
         services.ConfigureGraphQLServices();
+        services.ConfigureAwsCongnitoSecurity();
         services.ConfigureSwagger();
 
     }
