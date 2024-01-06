@@ -6,14 +6,14 @@ on:
     branches: [ main ]
 defaults:
   run:
-    working-directory: ./OrganizationSolution/Source
+    working-directory: ./OrganizationSolution/Source/App/Geography.Serverless
 
 jobs:
   build:
 
     runs-on: ubuntu-latest
     env: 
-      working-directory: ./OrganizationSolution/Source
+      working-directory: ./OrganizationSolution/Source/App/Geography.Serverless
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       
@@ -26,9 +26,9 @@ jobs:
     - name: AWS CLI
       run: dotnet tool install -g Amazon.Lambda.Tools
     - name: Restore dependencies
-      run: dotnet restore AWSServerless3.csproj
+      run: dotnet restore Geography.Serverless.csproj
     - name: Build
-      run: dotnet build --no-restore AWSServerless3.csproj
+      run: dotnet build --no-restore Geography.Serverless.csproj
     - name: Deploy to Lambda
-      working-directory: ./OrganizationSolution/Source
+      working-directory: ./OrganizationSolution/Source/App/Geography.Serverless
       run: dotnet lambda deploy-serverless
