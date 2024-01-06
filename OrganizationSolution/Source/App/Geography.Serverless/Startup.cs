@@ -31,8 +31,7 @@ public class Startup
         //services.Configure<ApplicationOptions>(Configuration.GetSection("Application"));
         services.AddTransient<CountryTableCreationProvider>();
         services.AddTransient<StateTableCreationProvider>();
-        services.AddScoped(typeof(IStorageManager<AmazonS3ConfigurationOptions>), typeof(StorageManager));
-        var applicationOptions = Configuration.GetSection("Application").Get<ApplicationOptions>();
+        services.AddScoped(typeof(IStorageManager<AmazonS3ConfigurationOptions>), typeof(StorageManager));        
         services.ConfigureClientServices();
         services.ConfigureGraphQLServices();
         services.ConfigureSwagger();

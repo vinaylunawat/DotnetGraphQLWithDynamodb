@@ -32,21 +32,8 @@ public class LambdaEntryPoint :
     /// <param name="builder"></param>
     protected async override void Init(IWebHostBuilder builder)
     {
-        var host = CreateHostBuilder()
-            .DefaultAppConfiguration(new[] { typeof(ApplicationOptions).Assembly })
-            .Build();
-        //using (var scope = host.Services.CreateScope())
-        //{
-        //    var services = scope.ServiceProvider;
-
-        //    var countryProvider = services.GetRequiredService<CountryTableCreationProvider>();
-        //    await countryProvider.Initialize("Country");
-
-        //    var stateProvider = services.GetRequiredService<StateTableCreationProvider>();
-        //    await stateProvider.Initialize("State");
-
-        //}
         builder
+            .DefaultAppConfiguration(new[] { typeof(ApplicationOptions).Assembly })
             .UseStartup<Startup>();
     }
 
