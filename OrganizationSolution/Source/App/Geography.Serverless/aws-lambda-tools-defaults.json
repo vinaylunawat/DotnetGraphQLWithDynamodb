@@ -6,9 +6,12 @@
     "All the command line options for the Lambda command can be specified in this file."
   ],
   "profile": "Rushik AWS",
-  "region": "us-east-1",
+  "region": "us-west-2",
   "configuration": "Release",
   "s3-prefix": "Geography.Serverless/",
   "template": "serverless.template",
-  "template-parameters": ""
+  "template-parameters": "",
+  "s3-bucket" : "graphqllambdasbuckets",
+  "stack-name" : "graphql-serverless-stack"
+  
 }
