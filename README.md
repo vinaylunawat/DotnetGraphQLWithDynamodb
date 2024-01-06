@@ -1,1 +1,2 @@
-# DotnetGraphQLWithDynamodb
+# DotNetEFCoreWithSQS 
+Adding Manifests

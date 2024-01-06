@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="AuthToken\**" />
+    <Compile Remove="GraphQL\State\**" />
+    <EmbeddedResource Remove="AuthToken\**" />
+    <EmbeddedResource Remove="GraphQL\State\**" />
+    <EntityDeploy Remove="AuthToken\**" />
+    <EntityDeploy Remove="GraphQL\State\**" />
+    <None Remove="AuthToken\**" />
+    <None Remove="GraphQL\State\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Framework\Framework.Business\Framework.Business.csproj" />
+    <ProjectReference Include="..\..\Framework\Framework.Security\Framework.Security.csproj" />
+    <ProjectReference Include="..\..\Framework\Framework.Service\Framework.Service.csproj" />
+    <ProjectReference Include="..\Geography.DataAccess\Geography.DataAccess.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+    <PackageReference Include="GraphQL" Version="7.7.2" />
+    <PackageReference Include="GraphQL.Server.Core" Version="5.2.2" />
+    <PackageReference Include="GraphQL.Server.Transports.AspNetCore" Version="7.6.0" />
+    <PackageReference Include="GraphQL.Server.Ui.Playground" Version="7.6.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+</Project>
