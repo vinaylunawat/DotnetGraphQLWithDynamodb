@@ -31,21 +31,8 @@ public class LambdaEntryPoint :
     /// needs to be configured in this method using the UseStartup<>() method.
     /// </summary>
     /// <param name="builder"></param>
-    protected async override void Init(IWebHostBuilder builder)
+    protected override void Init(IWebHostBuilder builder)
     {
-        //var host = builder.Build();
-        //using (var scope = host.Services.CreateScope())
-        //{
-        //    var services = scope.ServiceProvider;
-
-        //    var countryProvider = services.GetRequiredService<CountryTableCreationProvider>();
-        //    await countryProvider.Initialize("Country");
-
-        //    var stateProvider = services.GetRequiredService<StateTableCreationProvider>();
-        //    await stateProvider.Initialize("State");
-
-        //}
-
         builder
             .DefaultAppConfiguration(new[] { typeof(ApplicationOptions).Assembly })
             .UseStartup<Startup>();
@@ -58,7 +45,19 @@ public class LambdaEntryPoint :
     /// Instead customize the IWebHostBuilder in the Init(IWebHostBuilder) overload.
     /// </summary>
     /// <param name="builder"></param>
-    protected override void Init(IHostBuilder builder)
+    protected async override void Init(IHostBuilder builder)
     {
+        var host = builder.Build();
+        using (var scope = host.Services.CreateScope())
+        {
+            var services = scope.ServiceProvider;
+
+            var countryProvider = services.GetRequiredService<CountryTableCreationProvider>();
+            await countryProvider.Initialize("Country");
+
+            var stateProvider = services.GetRequiredService<StateTableCreationProvider>();
+            await stateProvider.Initialize("State");
+
+        }
     }
 }

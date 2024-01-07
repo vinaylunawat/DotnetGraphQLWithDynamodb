@@ -84,7 +84,6 @@
         {
             EnsureArg.IsNotNull(services, nameof(services));
             EnsureArg.IsNotNull(assembly, nameof(assembly));
-
             return AddManagers(services, new[] { assembly }, serviceLifetime);
         }
 

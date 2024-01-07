@@ -5,6 +5,9 @@
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.IdentityModel.Tokens;
     using Microsoft.AspNetCore.Authentication.JwtBearer;
+    using Geography.Business.Country.Models;
+    using Framework.Business;
+    using Geography.Business.Country.Manager;
 
     /// <summary>
     /// Defines the <see cref="ServicesConfiguration" />.
@@ -20,12 +23,19 @@
         /// <param name="services">The services<see cref="IServiceCollection"/>.</param>
         /// <returns>The <see cref="IServiceCollection"/>.</returns>
         public static IServiceCollection ConfigureClientServices(this IServiceCollection services)
-        {
-            var serviceProvider = services.BuildServiceProvider();
-            var applicationOptions = serviceProvider.GetRequiredService<ApplicationOptions>();
+        {            
             return services
+                .ConfigureAutoMapper()
+                .AddManagers(typeof(CountryManager).Assembly)
                 .ConfigureDbServices();
 
+        }
+
+        public static IServiceCollection ConfigureAutoMapper(this IServiceCollection services)
+        {
+            services.AddAutoMapper(typeof(Startup));
+            services.AddAutoMapper(typeof(CountryMappingProfile).Assembly);
+            return services;
         }
 
         /// <summary>
@@ -62,6 +72,13 @@
                     ValidateAudience = false
                 };
             });
+            return services;
+        }
+
+        public static IServiceCollection ConfigureDataProvider(this IServiceCollection services)
+        {
+            services.AddTransient<CountryTableCreationProvider>();
+            services.AddTransient<StateTableCreationProvider>();
             return services;
         }
     }

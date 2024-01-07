@@ -26,16 +26,10 @@ public class Startup
     {
         services.AddControllers();
         services.AddControllersWithViews().AddNewtonsoftJson();
-        services.AddAutoMapper(typeof(Startup));
-        services.AddAutoMapper(typeof(CountryMappingProfile).Assembly);
-        services.AddManagers(typeof(CountryManager).Assembly);
-
-        //services.Configure<ApplicationOptions>(Configuration.GetSection("Application"));
-        services.AddTransient<CountryTableCreationProvider>();
-        services.AddTransient<StateTableCreationProvider>();
-        services.AddScoped(typeof(IStorageManager<AmazonS3ConfigurationOptions>), typeof(StorageManager));        
+        services.AddScoped(typeof(IStorageManager<AmazonS3ConfigurationOptions>), typeof(StorageManager));
         services.ConfigureClientServices();
         services.ConfigureGraphQLServices();
+        services.ConfigureDataProvider();
         services.ConfigureAwsCongnitoSecurity();
     }
 
@@ -46,7 +40,7 @@ public class Startup
         {
             app.UseDeveloperExceptionPage();
         }
-        
+
         app.AddProblemDetailsSupport();
 
         app.UseHttpsRedirection();
