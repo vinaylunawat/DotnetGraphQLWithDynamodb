@@ -4,8 +4,7 @@
     /// <summary>
     /// Defines the <see cref="StateUpdateModel" />.
     /// </summary>
-    public class StateUpdateModel : StateCreateModel
+    public class StateUpdateModel : StateReadModel
     {
-        public long Id { get; set; }
     }
 }

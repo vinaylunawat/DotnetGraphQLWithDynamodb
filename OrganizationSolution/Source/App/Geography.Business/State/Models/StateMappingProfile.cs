@@ -15,20 +15,10 @@
         {
             CreateMap<State, StateReadModel>();
 
-            CreateMap<State, StateModel>();
-
             CreateMap<StateCreateModel, State>()
                 .ForMember(x => x.Id, opt => opt.Ignore());
-            //.ForMember(x => x.Country, opt => opt.Ignore());
 
-            CreateMap<StateModel, State>()
-                .ForMember(x => x.Id, opt => opt.Ignore());
-            //.ForMember(x => x.Country, opt => opt.Ignore());
-
-            CreateMap<StateUpdateModel, State>()
-                .ForMember(x => x.Id, opt => opt.MapFrom(src => src.Id))
-                //.ForMember(x => x.Country, opt => opt.Ignore())
-                .ForMember(x => x.CountryId, opt => opt.MapFrom(src => src.CountryId));
+            CreateMap<StateUpdateModel, State>();
         }
     }
 }

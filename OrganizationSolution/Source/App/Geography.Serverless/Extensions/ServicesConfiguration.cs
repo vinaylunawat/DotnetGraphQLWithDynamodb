@@ -8,6 +8,7 @@
     using Geography.Business.Country.Models;
     using Framework.Business;
     using Geography.Business.Country.Manager;
+    using Geography.Business.State.Models;
 
     /// <summary>
     /// Defines the <see cref="ServicesConfiguration" />.
@@ -26,7 +27,7 @@
         {            
             return services
                 .ConfigureAutoMapper()
-                .AddManagers(typeof(CountryManager).Assembly)
+                //.AddManagers(typeof(CountryManager).Assembly)
                 .ConfigureDbServices();
 
         }
@@ -35,6 +36,7 @@
         {
             services.AddAutoMapper(typeof(Startup));
             services.AddAutoMapper(typeof(CountryMappingProfile).Assembly);
+            //services.AddAutoMapper(typeof(StateMappingProfile).Assembly);
             return services;
         }
 

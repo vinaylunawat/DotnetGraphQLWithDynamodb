@@ -38,9 +38,10 @@
         {
             await _dynamoDBContext.DeleteAsync<TEntity>(key, cancellationToken);
         }
-        public async Task UpdateAsync(TEntity entity, CancellationToken cancellationToken)
+        public async Task<TEntity> UpdateAsync(TEntity entity, CancellationToken cancellationToken)
         {
             await _dynamoDBContext.SaveAsync(entity, cancellationToken);
+            return entity;
         }
     }
 }
