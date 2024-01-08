@@ -23,6 +23,9 @@ public class LocalEntryPoint
             var stateProvider = services.GetRequiredService<StateTableCreationProvider>();
             await stateProvider.Initialize("State");
 
+            var proofOfIdentityProvider = services.GetRequiredService<ProofOfIdentityTableCreationProvider>();
+            await proofOfIdentityProvider.Initialize("ProofOfIdentity");
+
         }
         await host.RunAsync();
     }
