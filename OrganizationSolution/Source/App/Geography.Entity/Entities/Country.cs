@@ -3,6 +3,7 @@
     using Amazon.DynamoDBv2.DataModel;
     using Framework.Entity.Entities;
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel;
 
     /// <summary>
@@ -19,6 +20,9 @@
 
         [DynamoDBProperty("Continent")]
         public string Continent { get; set; }
+
+        [DynamoDBIgnore]
+        public IEnumerable<State> States { get; set; }
 
         //public Continent Continent
         //{
