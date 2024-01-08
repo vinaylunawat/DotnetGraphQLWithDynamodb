@@ -81,6 +81,7 @@
         {
             services.AddTransient<CountryTableCreationProvider>();
             services.AddTransient<StateTableCreationProvider>();
+            services.AddTransient<ProofOfIdentityTableCreationProvider>();
             return services;
         }
     }
