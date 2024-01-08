@@ -1,6 +1,6 @@
 ﻿using GraphQL.Types;
 
-namespace Geography.Business.State
+namespace Geography.Business.State.Types
 {
     public class StateCreateInputType : InputObjectGraphType
     {
@@ -8,7 +8,7 @@ namespace Geography.Business.State
         {
             Name = "stateCreateInput";
             Field<NonNullGraphType<StringGraphType>>("name");
-            Field<LongGraphType>("countryId");
+            Field<IdGraphType>("countryId");
         }
     }
 
@@ -19,7 +19,7 @@ namespace Geography.Business.State
             Name = "stateUpdateInput";
             Field<IdGraphType>("Id");
             Field<StringGraphType>("name");
-            Field<LongGraphType>("countryId");
+            Field<IdGraphType>("countryId");
         }
     }
 }

@@ -13,7 +13,7 @@
         Task<TEntity> GetByKey<TKey, TRangeKey>(TKey key, TRangeKey rangeKey, CancellationToken cancellationToken);
 
         Task<TEntity> CreateAsync(TEntity entity, CancellationToken cancellationToken);
-        Task UpdateAsync(TEntity entity, CancellationToken cancellationToken);
+        Task<TEntity> UpdateAsync(TEntity entity, CancellationToken cancellationToken);
 
         Task DeleteAsync<TKey>(TKey key, CancellationToken cancellationToken);
     }

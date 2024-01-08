@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Geography.Business.Country.Models;
+using Geography.Business.Country.Types;
 using Geography.Business.GraphQL;
 using Geography.DataAccess.Repository;
 using GraphQL;
@@ -9,11 +10,10 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Geography.Business.Country
+namespace Geography.Business.Country.Manager
 {
     public class CountryQuery : ITopLevelQuery
     {
-        //private readonly ICountryManager _countryManager;
         private readonly ICountryRepository _countryRepository;
         private readonly IMapper _mapper;
         public CountryQuery(ICountryRepository countryRepository, IMapper mapper)
@@ -31,21 +31,20 @@ namespace Geography.Business.Country
             .ResolveAsync(async context => await ResolveCountry(context).ConfigureAwait(false));
         }
 
-        private async Task<IEnumerable<CountryModel>> ResolveCountries()
+        private async Task<IEnumerable<CountryReadModel>> ResolveCountries()
         {
             var dbCountry = await _countryRepository.GetAll(CancellationToken.None).ConfigureAwait(false);
-            return _mapper.Map<IEnumerable<CountryModel>>(dbCountry);
+            return _mapper.Map<IEnumerable<CountryReadModel>>(dbCountry);
         }
 
-        private async Task<CountryModel> ResolveCountry(IResolveFieldContext<object> context)
+        private async Task<CountryReadModel> ResolveCountry(IResolveFieldContext<object> context)
         {
 
             var key = context.GetArgument<Guid>("countryId");
             if (key != Guid.Empty)
             {
-                var dbEntity = await _countryRepository.GetByKey<Guid>(key, default).ConfigureAwait(false);
-                var result = _mapper.Map<CountryModel>(dbEntity);
-                return result;
+                var dbEntity = await _countryRepository.GetByKey(key, default).ConfigureAwait(false);
+                return _mapper.Map<CountryReadModel>(dbEntity);
             }
             else
             {

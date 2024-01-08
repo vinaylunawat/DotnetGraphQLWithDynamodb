@@ -1,12 +1,14 @@
-﻿using GraphQL.Types;
-namespace Geography.Business.State
+﻿using Geography.Business.State.Models;
+using GraphQL.Types;
+namespace Geography.Business.State.Types
 {
-    public class StateType : ObjectGraphType<Entity.Entities.State>
+    public class StateType : ObjectGraphType<StateReadModel>
     {
         public StateType()
         {
             Field(x => x.Id, type: typeof(IdGraphType));
             Field(x => x.Name, type: typeof(StringGraphType));
+            Field(x => x.CountryId, type: typeof(IdGraphType));
             //Field<CountryType>("Country");
             //.ResolveAsync(async context => await ResolveStatesAsync(context));
 

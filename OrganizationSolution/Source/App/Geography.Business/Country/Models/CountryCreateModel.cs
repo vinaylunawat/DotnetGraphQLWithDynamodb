@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Geography.Business.Country.Types;
+using Geography.Business.Country.Validator;
+using System;
 
 namespace Geography.Business.Country.Models
 {
@@ -10,13 +12,13 @@ namespace Geography.Business.Country.Models
     {
         public CountryCreateModel()
         {
-            Id = Guid.NewGuid();
-            //States = new List<StateCreateModel>();
+            //States = new List<StateCreateModel>();            
         }
 
-        public Guid Id { get; set; }
         public string Name { get; set; }
         public string IsoCode { get; set; }
+
+        public Continent Continent { get; set; }
 
         //public IEnumerable<StateCreateModel> States { get; set; }
     }

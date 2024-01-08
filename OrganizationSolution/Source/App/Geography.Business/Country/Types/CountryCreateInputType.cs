@@ -1,15 +1,16 @@
 ﻿using Geography.Business.State;
 using GraphQL.Types;
 
-namespace Geography.Business.Country
+namespace Geography.Business.Country.Types
 {
     public class CountryCreateInputType : InputObjectGraphType
     {
         public CountryCreateInputType()
         {
-            Name = "CountryCreateInput";            
+            Name = "CountryCreateInput";
             Field<NonNullGraphType<StringGraphType>>("name");
-            Field<NonNullGraphType<StringGraphType>>("isoCode");
+            Field<StringGraphType>("isoCode");
+            Field<ContinentType> ("continent");
             //Field<ListGraphType<StateCreateInputType>>("states");
         }
     }
@@ -22,7 +23,8 @@ namespace Geography.Business.Country
             Field<NonNullGraphType<IdGraphType>>("Id");
             Field<StringGraphType>("name");
             Field<StringGraphType>("isoCode");
-            Field<ListGraphType<StateUpdateInputType>>("states");
+            Field<ContinentType>("continent");
+            //Field<ListGraphType<StateUpdateInputType>>("states");
         }
     }
 }

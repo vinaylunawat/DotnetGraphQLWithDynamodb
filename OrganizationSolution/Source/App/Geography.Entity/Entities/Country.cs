@@ -3,6 +3,7 @@
     using Amazon.DynamoDBv2.DataModel;
     using Framework.Entity.Entities;
     using System;
+    using System.ComponentModel;
 
     /// <summary>
     /// Defines the <see cref="Country" />.
@@ -16,6 +17,15 @@
         [DynamoDBProperty("IsoCode")]
         public string IsoCode { get; set; }
 
+        [DynamoDBProperty("Continent")]
+        public string Continent { get; set; }
+
+        //public Continent Continent
+        //{
+        //    get => (Continent)ContinentInt;
+        //    set => ContinentInt = (int)value;
+        //}
+
     }
-    
+
 }
