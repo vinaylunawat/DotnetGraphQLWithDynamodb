@@ -6,7 +6,7 @@ defaults:
   run:
     working-directory: ./OrganizationSolution/Source/App/Geography.Serverless
 jobs:
-  build:
+  deployment-lambda:
     runs-on: ubuntu-latest
     env: 
       working-directory: ./OrganizationSolution/Source/App/Geography.Serverless
