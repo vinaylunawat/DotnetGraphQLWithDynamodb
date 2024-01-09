@@ -33,9 +33,9 @@ namespace Geography.ServerlessTests.TestData
                          new GraphQLModel{ Query="mutation($country: CountryCreateInput!) { createCountry(country: $country) { id name isoCode continent} }" ,
                                           Variables=new Dictionary<string, object>
                                           {
-                                              {   "country", new Dictionary<string ,string>{ 
-                                                  {"name", "Test" } ,
-                                                  { "isoCode","TT" } ,
+                                              {   "country", new Dictionary<string ,string>{
+                                                  {"name", "Test Create" } ,
+                                                  { "isoCode","TC" } ,
                                                   {"continent","ASIA" }
                                               } }
                                           }
@@ -57,8 +57,8 @@ namespace Geography.ServerlessTests.TestData
                                           Variables=new Dictionary<string, object>
                                           {
                                               {   "country", new Dictionary<string ,string>{
-                                                  {"name", "Test" } ,
-                                                  { "isoCode","TT" } ,
+                                                  {"name", "Test Delete" } ,
+                                                  { "isoCode","TD" } ,
                                                   {"continent","ASIA" }
                                               } }
                                           }
@@ -86,8 +86,8 @@ namespace Geography.ServerlessTests.TestData
                                           Variables=new Dictionary<string, object>
                                           {
                                               {   "country", new Dictionary<string ,string>{
-                                                  {"name", "Test" } ,
-                                                  { "isoCode","TT" } ,
+                                                  {"name", "Test Update" } ,
+                                                  { "isoCode","TU" } ,
                                                   {"continent","ASIA" }
                                               } }
                                           }
@@ -114,7 +114,7 @@ namespace Geography.ServerlessTests.TestData
                     }
 
         };
-        public static IEnumerable<object[]> GraphQLModelDataForInvalidUpdate() =>
+        public static IEnumerable<object[]> GraphQLModelInvalidUpdate() =>
        new List<GraphQLModel[]>
            {
                     new GraphQLModel[]
@@ -125,8 +125,8 @@ namespace Geography.ServerlessTests.TestData
                                               { "country", new Dictionary<string ,string>{
 
                                                   {"id", Guid.NewGuid().ToString() } ,
-                                                  {"name", "Test" } ,
-                                                  {"isoCode","TT" } ,
+                                                  {"name", "Test Invalid" } ,
+                                                  {"isoCode","TI" } ,
                                                   {"continent","ASIA" }
                                               } }
                                           }
@@ -148,7 +148,7 @@ namespace Geography.ServerlessTests.TestData
                     }
 
            };
-       
+
 
         public static IEnumerable<object[]> GraphQLModelDataWithIsoAlreadyExist() =>
         new List<GraphQLModel[]>
