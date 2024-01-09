@@ -4,9 +4,12 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
+defaults:
+  run:
+    working-directory: ./OrganizationSolution/Source/App/Geography.Serverless
 
 jobs:
-  job1:
+  Build-Job: 
     runs-on: ubuntu-latest
     env: 
       working-directory: ./OrganizationSolution/Source/App/Geography.Serverless
@@ -37,24 +40,23 @@ jobs:
       run: dotnet restore Geography.Serverless.csproj
     - name: Build
       run: dotnet build --no-restore Geography.Serverless.csproj
-  job2:
+  Test:
     runs-on: ubuntu-latest
-    needs: job1
+    needs: Build-Job
     if: always()
     steps:
     - name: test cases
       working-directory: ./OrganizationSolution/Source/Test/Geography.ServerlessTests
       run: dotnet test Geography.ServerlessTests.csproj --environment ASPNETCORE_ENVIRONMENT="Production"
-  job3:
+  Deploy:
     runs-on: ubuntu-latest
     env: 
       working-directory: ./OrganizationSolution/Source/App/Geography.Serverless
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-    needs: job1
-    if: always()
-    steps:
-    - name: Deploy to Lambda
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}    
+      uses: actions/setup-dotnet@v1
+      needs: Build-Job
       run: |
           ls
+          cd OrganizationSolution/Source/App/Geography.Serverless
           dotnet lambda deploy-serverless
