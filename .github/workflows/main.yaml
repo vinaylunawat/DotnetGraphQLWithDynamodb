@@ -35,7 +35,7 @@ jobs:
       working-directory: ./OrganizationSolution/Source/Test/Geography.ServerlessTests
       run: |
           ls
-          dotnet test Geography.ServerlessTests.csproj
+          dotnet test Geography.ServerlessTests.csproj --env ASPNETCORE_ENVIRONMENT="Production"
     - name: Deploy to Lambda
       working-directory: ./OrganizationSolution/Source/App/Geography.Serverless
       run: dotnet lambda deploy-serverless
