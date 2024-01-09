@@ -53,15 +53,23 @@ namespace Geography.Business.Country.Manager
                 LoadErrors(context, validationResult);
                 return null;
             }
+            
+            var dbEntity = await _countryRepository.GetAll(default).ConfigureAwait(false);
+            if (dbEntity.Any(x=> x.Name == country.Name))
+            {
+                context.Errors.Add(new ExecutionError("Country name can not be duplicate."));
+                return null;
+            }
 
             var countryEntity = _mapper.Map<Entity.Entities.Country>(country);
             countryEntity.Id = Guid.NewGuid();
 
             if (country.States.Any())
             {
-                
+
                 var isSuccess = await _countryRepository.SaveTransactionData(countryEntity);
-                if (!isSuccess) {
+                if (!isSuccess)
+                {
                     context.Errors.Add(new ExecutionError("Transacation failed to save data."));
                 }
                 else
