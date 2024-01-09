@@ -70,8 +70,13 @@
                 options.Authority = applicationOptions.CognitoAuthorityURL;
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
+                    ValidateIssuer = true,
+                    ValidIssuer = applicationOptions.CognitoAuthorityURL,
+                    ValidateLifetime=true,
+                    LifetimeValidator = (before, expires, token, param) => expires > DateTime.UtcNow,
                     ValidateIssuerSigningKey = true,
-                    ValidateAudience = false
+                    ValidateAudience = false,
+                    
                 };
             });
             return services;
