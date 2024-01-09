@@ -58,7 +58,6 @@ jobs:
     if: always()
     steps:
     - name: Deploy to Lambda
-      working-directory: ./OrganizationSolution/Source/App/Geography.Serverless
       run: |
           ls
           dotnet lambda deploy-serverless
