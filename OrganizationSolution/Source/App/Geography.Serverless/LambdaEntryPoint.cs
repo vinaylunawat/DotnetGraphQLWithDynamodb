@@ -1,7 +1,5 @@
 using Framework.Configuration.Models;
-using Geography.DataAccess;
 using Framework.Configuration;
-using Microsoft.Extensions.Hosting;
 
 namespace Geography.Serverless;
 

@@ -5,10 +5,7 @@
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.IdentityModel.Tokens;
     using Microsoft.AspNetCore.Authentication.JwtBearer;
-    using Geography.Business.Country.Models;
-    using Framework.Business;
-    using Geography.Business.Country.Manager;
-    using Geography.Business.State.Models;
+    using Geography.Business.Country.Models;    
 
     /// <summary>
     /// Defines the <see cref="ServicesConfiguration" />.
