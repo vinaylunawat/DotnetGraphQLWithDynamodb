@@ -1,10 +1,13 @@
 ﻿namespace Geography.Business.Country.Models
 {
+    using Amazon.DynamoDBv2.Model;
     using AutoMapper;
     using Entity.Entities;
+    using Framework.DataAccess.Model;
     using Geography.Business.Country.Types;
     using Microsoft.IdentityModel.Tokens;
     using System;
+    using System.Collections.Generic;
 
     /// <summary>
     /// Defines the <see cref="CountryMappingProfile" />.
@@ -26,6 +29,28 @@
             CreateMap<CountryUpdateModel, Country>()
                 .ForMember(x => x.Continent, opt => opt.MapFrom(a => a.Continent.ToString()))
                 .ForMember(x => x.Continent, opt => opt.MapFrom(a => a.Continent.ToString()));
+
+            CreateMap<PagedResultModel<Country>, PagedResultModel<CountryReadModel>>();
+
+            CreateMap<Dictionary<string, AttributeValue>, Country>()
+                .ForMember(x => x.Id, opt => opt.MapFrom(src => src["Id"].S))
+                .ForMember(x => x.Name, opt => opt.MapFrom(src => src["Name"].S))
+                .ForMember(x => x.IsoCode, opt => opt.MapFrom(src => src["IsoCode"] != null ? src["IsoCode"].S : null))
+                .ForMember(x => x.Continent, opt => opt.MapFrom(src => src["Continent"].S))
+                .ForMember(x => x.UpdatedDate, opt => opt.MapFrom(src => GetUpdateDate(src["UpdatedDate"] != null ? src["UpdatedDate"].S : null)));
+        }
+
+        private DateTime GetUpdateDate(string strUpdatedDate)
+        {
+            
+            if(DateTime.TryParse(strUpdatedDate, out var updatedDate))
+            {
+                return updatedDate;
+            }
+            else
+            {
+                throw new Exception("Invalid datetime format");
+            }
         }
 
         private static Continent GetContinent(string strContinent)
