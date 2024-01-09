@@ -50,6 +50,10 @@ jobs:
       run: dotnet test Geography.ServerlessTests.csproj --environment ASPNETCORE_ENVIRONMENT="Production"
   job3:
     runs-on: ubuntu-latest
+    env: 
+      working-directory: ./OrganizationSolution/Source/App/Geography.Serverless
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     needs: job1
     if: always()
     steps:
