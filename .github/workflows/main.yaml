@@ -54,7 +54,6 @@ jobs:
       working-directory: ./OrganizationSolution/Source/App/Geography.Serverless
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}    
-      uses: actions/setup-dotnet@v1
       needs: Build-Job
       run: |
           ls
