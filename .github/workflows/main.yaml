@@ -34,9 +34,7 @@ jobs:
     - name: test cases
       #working-directory: ./OrganizationSolution/Source/Test/Geography.ServerlessTests
       run:
-          cd ..
           ls
-          cd Test/Geography.ServerlessTests
           dotnet test Geography.ServerlessTests.csproj
     - name: Deploy to Lambda
       working-directory: ./OrganizationSolution/Source/App/Geography.Serverless
