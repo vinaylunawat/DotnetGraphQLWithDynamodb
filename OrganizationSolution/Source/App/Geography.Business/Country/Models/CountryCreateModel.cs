@@ -1,5 +1,6 @@
 ﻿using Geography.Business.Country.Types;
 using Geography.Business.State.Models;
+using System;
 using System.Collections.Generic;
 
 namespace Geography.Business.Country.Models
@@ -21,5 +22,6 @@ namespace Geography.Business.Country.Models
         public Continent Continent { get; set; }
 
         public IEnumerable<StateCreateModel> States { get; set; }
+        public DateTime UpdatedDate { get; set; }
     }
 }

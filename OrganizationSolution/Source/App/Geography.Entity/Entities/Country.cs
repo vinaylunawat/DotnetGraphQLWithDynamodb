@@ -24,11 +24,8 @@
         [DynamoDBIgnore]
         public IEnumerable<State> States { get; set; }
 
-        //public Continent Continent
-        //{
-        //    get => (Continent)ContinentInt;
-        //    set => ContinentInt = (int)value;
-        //}
+        [DynamoDBProperty("UpdatedDate")]
+        public DateTime? UpdatedDate { get; set; }
 
     }
 

@@ -3,6 +3,8 @@
     using Amazon.DynamoDBv2;
     using Amazon.DynamoDBv2.DataModel;
     using Amazon.DynamoDBv2.Model;
+    using Amazon.Util;
+    using AutoMapper;
     using Entity.Entities;
     using Framework.DataAccess.Repository;
     using Microsoft.IdentityModel.Tokens;
@@ -16,9 +18,11 @@
     public class CountryRepository : GenericRepository<Country>, ICountryRepository
     {
         private readonly IAmazonDynamoDB _client;
-        public CountryRepository(IDynamoDBContext context, IAmazonDynamoDB client) : base(context)
+        private readonly IMapper _mapper;
+        public CountryRepository(IDynamoDBContext context, IAmazonDynamoDB client, IMapper mapper) : base(context, client)
         {
             _client = client;
+            _mapper = mapper;
         }
 
         public async Task<bool> SaveTransactionData(Country country)
@@ -31,6 +35,7 @@
                 { "Name" , new AttributeValue(country.Name) },
                 { "IsoCode", country.IsoCode.IsNullOrEmpty() ? new AttributeValue { NULL = true } : new AttributeValue(country.IsoCode) },
                 { "Continent", new AttributeValue(country.Continent) },
+                { "UpdatedDate", new AttributeValue(DateTime.UtcNow.ToString(AWSSDKUtils.ISO8601DateFormat)) },
             };
 
             var createCountry = new Put()
@@ -107,12 +112,12 @@
                 { "Id", new AttributeValue(countryId) }
             };
 
-            var checkCountryValid = new ConditionCheck()
-            {
-                TableName = "Country",
-                Key = countryKey,
-                ConditionExpression = "attribute_exists(Id)"
-            };
+            //var checkCountryValid = new ConditionCheck()
+            //{
+            //    TableName = "Country",
+            //    Key = countryKey,
+            //    ConditionExpression = "attribute_exists(Id)"
+            //};
 
             //Update Country
 
@@ -148,27 +153,27 @@
                  new TransactWriteItem() {Update = updateCountry },                 
             };
 
-            var stateData = new List<Put>();
+            //var stateData = new List<Put>();
 
-            foreach (var state in country.States)
-            {
-                stateData.Add(new Put()
-                {
-                    TableName = "State",
-                    Item = new Dictionary<string, AttributeValue>
-                    {
-                        { "Id" , new AttributeValue{ S = Convert.ToString(Guid.NewGuid()) } },
-                        { "Name" , new AttributeValue{ S = state.Name } },
-                        { "CountryId", new AttributeValue{S = countryId } },
-                    },
-                    ReturnValuesOnConditionCheckFailure = Amazon.DynamoDBv2.ReturnValuesOnConditionCheckFailure.ALL_OLD,
-                });
-            }
+            //foreach (var state in country.States)
+            //{
+            //    stateData.Add(new Put()
+            //    {
+            //        TableName = "State",
+            //        Item = new Dictionary<string, AttributeValue>
+            //        {
+            //            { "Id" , new AttributeValue{ S = Convert.ToString(Guid.NewGuid()) } },
+            //            { "Name" , new AttributeValue{ S = state.Name } },
+            //            { "CountryId", new AttributeValue{S = countryId } },
+            //        },
+            //        ReturnValuesOnConditionCheckFailure = Amazon.DynamoDBv2.ReturnValuesOnConditionCheckFailure.ALL_OLD,
+            //    });
+            //}
 
-            foreach (var put in stateData)
-            {
-                actions.Add(new TransactWriteItem() { Put = put });
-            }
+            //foreach (var put in stateData)
+            //{
+            //    actions.Add(new TransactWriteItem() { Put = put });
+            //}
 
             var transaction = new TransactWriteItemsRequest()
             {
