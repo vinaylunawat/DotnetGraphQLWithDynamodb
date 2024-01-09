@@ -41,7 +41,7 @@ jobs:
     - name: Build
       run: dotnet build --no-restore Geography.Serverless.csproj         
     - name: test cases
-      working-directory: ./OrganizationSolution/Source/Test/Geography.ServerlessTests
+      #working-directory: ./OrganizationSolution/Source/Test/Geography.ServerlessTests
      #run: dotnet test Geography.ServerlessTests.csproj --environment ASPNETCORE_ENVIRONMENT="Production"
     - name: Deploy to Lambda
       working-directory: ./OrganizationSolution/Source/App/Geography.Serverless
