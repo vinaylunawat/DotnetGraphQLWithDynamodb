@@ -35,7 +35,7 @@ jobs:
       working-directory: ./OrganizationSolution/Source/Test/Geography.ServerlessTests
       run: |
           ls
-          dotnet test --no-restore --verbosity normal --Geography.ServerlessTests.csproj --env AWSConfigurationOptions__ClientId = ${{ secrets.AWS_ACCESS_KEY_ID }} --env AWSConfigurationOptions__ClientSecret= ${{ secrets.AWS_SECRET_ACCESS_KEY }} --env AWSConfigurationOptions__UserPoolClientId= ${{secrets.AWS_USERPOOLCLIENTID_KEY }} --env AWSConfigurationOptions__UserPoolClientSecret= ${{secrets.AWS_USERPOOLCLIENTSECRET_KEY }} --env AWSConfigurationOptions__UserPoolId= ${{secrets.AWS_USERPOOLID_KEY }} 
+          dotnet test --no-restore --verbosity normal  
     - name: Deploy to Lambda
       working-directory: ./OrganizationSolution/Source/App/Geography.Serverless
       run: dotnet lambda deploy-serverless
