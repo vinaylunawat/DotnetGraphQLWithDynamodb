@@ -16,7 +16,9 @@ jobs:
       working-directory: ./OrganizationSolution/Source/App/Geography.Serverless
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      
+      AWS_USERPOOL_CLIENT_ID: ${{secrets.AWS_USERPOOLCLIENTID_KEY }}
+      AWS_USERPOOL_ID: ${{secrets.AWS_USERPOOLID_KEY }}
+      AWS_USERPOOL_CLIENT_SECRET: ${{secrets.AWS_USERPOOLCLIENTSECRET_KEY }}
     steps:
     - uses: actions/checkout@v2
     - name: Setup .NET
@@ -31,7 +33,13 @@ jobs:
       run: dotnet build --no-restore Geography.Serverless.csproj
     - name: test cases
       working-directory: ./OrganizationSolution/Source/Test/Geography.ServerlessTests
-      run: dotnet test Geography.ServerlessTests.csproj
+      run: dotnet test Geography.ServerlessTests.csproj 
+          --environment ASPNETCORE_ENVIRONMENT="Production"
+          --environment AWSConfigurationOptions__ClientId=AWS_ACCESS_KEY_ID
+          --environment AWSConfigurationOptions__ClientSecret=AWS_SECRET_ACCESS_KEY
+          --environment AWSConfigurationOptions__UserPoolClientId=AWS_USERPOOL_CLIENT_ID
+          --environment AWSConfigurationOptions__UserPoolId=AWS_USERPOOL_ID
+           --environment AWSConfigurationOptions__UserPoolClientSecret=AWS_USERPOOL_CLIENT_SECRET
     - name: Deploy to Lambda
       working-directory: ./OrganizationSolution/Source/App/Geography.Serverless
       run: dotnet lambda deploy-serverless
