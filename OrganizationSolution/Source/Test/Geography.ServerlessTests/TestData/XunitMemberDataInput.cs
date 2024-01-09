@@ -22,7 +22,7 @@ namespace Geography.ServerlessTests.TestData
                     }
 
           };
-        public static IEnumerable<object[]> GraphQLModelDatas() =>
+        public static IEnumerable<object[]> GraphQLModelDataForCreate() =>
         new List<GraphQLModel[]>
          {
                     new GraphQLModel[]
@@ -33,10 +33,9 @@ namespace Geography.ServerlessTests.TestData
                          new GraphQLModel{ Query="mutation($country: CountryCreateInput!) { createCountry(country: $country) { id name isoCode continent} }" ,
                                           Variables=new Dictionary<string, object>
                                           {
-                                              { "country", new Dictionary<string ,string>{
-
-                                                  {"name", "Country One" } ,
-                                                  { "isoCode","US" } ,
+                                              {   "country", new Dictionary<string ,string>{ 
+                                                  {"name", "Test" } ,
+                                                  { "isoCode","TT" } ,
                                                   {"continent","ASIA" }
                                               } }
                                           }
@@ -45,23 +44,79 @@ namespace Geography.ServerlessTests.TestData
                     }
 
          };
-        public static IEnumerable<object[]> GraphQLModelDelete() =>
-        new List<GraphQLModel[]>
-           {
+
+        public static IEnumerable<object[]> GraphQLModelDataForDelete() =>
+       new List<GraphQLModel[]>
+        {
                     new GraphQLModel[]
                     {
-                         new GraphQLModel{ Query="mutation($countryId: ID!) { deleteCountry(countryId: $countryId) }" ,
+                        new GraphQLModel{ Query="query countries { countries { id name isoCode continent} }",
+                                          Variables=null
+                        },
+                         new GraphQLModel{ Query="mutation($country: CountryCreateInput!) { createCountry(country: $country) { id name isoCode continent} }" ,
                                           Variables=new Dictionary<string, object>
                                           {
-                                              { "countryId", "20020" }
+                                              {   "country", new Dictionary<string ,string>{
+                                                  {"name", "Test" } ,
+                                                  { "isoCode","TT" } ,
+                                                  {"continent","ASIA" }
+                                              } }
+                                          }
+
+                        },
+                        new GraphQLModel{ Query="mutation($countryId: ID!) { deleteCountry(countryId: $countryId) }" ,
+                                          Variables=new Dictionary<string, object>
+                                          {
+                                              { "countryId", "-1" }
                                           }
                         }
                     }
 
-           };
+        };
+
         public static IEnumerable<object[]> GraphQLModelDataForUpdate() =>
-        new List<GraphQLModel[]>
-            {
+       new List<GraphQLModel[]>
+        {
+                    new GraphQLModel[]
+                    {
+                        new GraphQLModel{ Query="query countries { countries { id name isoCode continent} }",
+                                          Variables=null
+                        },
+                         new GraphQLModel{ Query="mutation($country: CountryCreateInput!) { createCountry(country: $country) { id name isoCode continent} }" ,
+                                          Variables=new Dictionary<string, object>
+                                          {
+                                              {   "country", new Dictionary<string ,string>{
+                                                  {"name", "Test" } ,
+                                                  { "isoCode","TT" } ,
+                                                  {"continent","ASIA" }
+                                              } }
+                                          }
+
+                        },
+                            new GraphQLModel{ Query="mutation($country: CountryUpdateInput!) { updateCountry(country: $country) { id name isoCode } }" ,
+                                          Variables=new Dictionary<string, object>
+                                          {
+                                              { "country", new Dictionary<string ,string>{
+
+                                                  {"id", "-1" } ,
+                                                  {"name", "TestUpdate" } ,
+                                                  {"isoCode","UT" } ,
+                                                  {"continent","AFRICA" }
+                                              } }
+                                          }
+                        },
+                        new GraphQLModel{ Query="mutation($countryId: ID!) { deleteCountry(countryId: $countryId) }" ,
+                                          Variables=new Dictionary<string, object>
+                                          {
+                                              { "countryId", "-1" }
+                                          }
+                        }
+                    }
+
+        };
+        public static IEnumerable<object[]> GraphQLModelDataForInvalidUpdate() =>
+       new List<GraphQLModel[]>
+           {
                     new GraphQLModel[]
                     {
                          new GraphQLModel{ Query="mutation($country: CountryUpdateInput!) { updateCountry(country: $country) { id name isoCode } }" ,
@@ -69,16 +124,31 @@ namespace Geography.ServerlessTests.TestData
                                           {
                                               { "country", new Dictionary<string ,string>{
 
-                                                  {"id", "20025" } ,
-                                                  {"name", "Country One" } ,
-                                                  { "isoCode","US" } ,
+                                                  {"id", Guid.NewGuid().ToString() } ,
+                                                  {"name", "Test" } ,
+                                                  {"isoCode","TT" } ,
                                                   {"continent","ASIA" }
                                               } }
                                           }
                         }
                     }
 
-            };
+           };
+        public static IEnumerable<object[]> GraphQLModelDeleteInvalidData() =>
+        new List<GraphQLModel[]>
+           {
+                    new GraphQLModel[]
+                    {
+                         new GraphQLModel{ Query="mutation($countryId: ID!) { deleteCountry(countryId: $countryId) }" ,
+                                          Variables=new Dictionary<string, object>
+                                          {
+                                              { "countryId", "-1" }
+                                          }
+                        }
+                    }
+
+           };
+       
 
         public static IEnumerable<object[]> GraphQLModelDataWithIsoAlreadyExist() =>
         new List<GraphQLModel[]>
@@ -90,8 +160,8 @@ namespace Geography.ServerlessTests.TestData
                                           {
                                               { "country", new Dictionary<string ,string>{
 
-                                                  {"name", "Country One" } ,
-                                                  { "isoCode","US" } ,
+                                                  {"name", "Test" } ,
+                                                  { "isoCode","TT" } ,
                                                   {"continent","ASIA" }
                                               } }
                                           }
