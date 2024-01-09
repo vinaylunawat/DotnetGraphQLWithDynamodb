@@ -29,6 +29,9 @@ jobs:
       run: dotnet restore Geography.Serverless.csproj
     - name: Build
       run: dotnet build --no-restore Geography.Serverless.csproj
+    - name: test cases
+      working-directory: ./OrganizationSolution/Source/Test/Geography.ServerlessTests
+      run: dotnet test Geography.ServerlessTests.csproj
     - name: Deploy to Lambda
       working-directory: ./OrganizationSolution/Source/App/Geography.Serverless
       run: dotnet lambda deploy-serverless
