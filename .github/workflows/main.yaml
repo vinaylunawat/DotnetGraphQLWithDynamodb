@@ -10,7 +10,6 @@ defaults:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
     env: 
       working-directory: ./OrganizationSolution/Source/App/Geography.Serverless
