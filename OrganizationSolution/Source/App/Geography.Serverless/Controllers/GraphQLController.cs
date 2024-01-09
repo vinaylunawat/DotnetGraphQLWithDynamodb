@@ -6,6 +6,7 @@ using GraphQL.Types;
 using Microsoft.AspNetCore.Mvc;
 using GraphQL.NewtonsoftJson;
 using NuGet.Protocol;
+using Newtonsoft.Json;
 
 namespace Geography.Service
 {
@@ -56,8 +57,7 @@ namespace Geography.Service
 
             if (result.Errors?.Count > 0)
             {
-                _logger.LogWarning("Error in GraphQL Query Excecution {@Data}", new { result.Errors });
-
+                _logger.LogError("Error in GraphQL Query Excecution {@Data}", JsonConvert.SerializeObject(result.Errors));
                 return BadRequest(new { errors = result.Errors.Select(j => j.Message) });
             }
 

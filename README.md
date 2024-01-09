@@ -1,2 +1,2 @@
-# DotNetEFCoreWithSQS  
+# DotNetDynamoDB  
 Adding Manifests
