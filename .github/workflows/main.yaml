@@ -33,7 +33,7 @@ jobs:
       run: dotnet build --no-restore Geography.Serverless.csproj
     - name: test cases
       working-directory: ./OrganizationSolution/Source/Test/Geography.ServerlessTests
-      run: dotnet test Geography.ServerlessTests.csproj --environment ASPNETCORE_ENVIRONMENT="Production" --environment AWSConfigurationOptions__ClientId="AKIA25YN4OYKSKWOIHV5" --environment AWSConfigurationOptions__ClientSecret="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" --environment AWSConfigurationOptions__UserPoolClientId="68ohnv3bhi64k08riiqfu1b1pk" --environment AWSConfigurationOptions__UserPoolId="us-west-2_JojgZLDdW" --environment AWSConfigurationOptions__UserPoolClientSecret="v6j0nn60a6b5ksbd22qv7i3dkkd4hoic90dqeibpp9jr7o2edh5"
+      run: dotnet test 
     - name: Deploy to Lambda
       working-directory: ./OrganizationSolution/Source/App/Geography.Serverless
       run: dotnet lambda deploy-serverless
