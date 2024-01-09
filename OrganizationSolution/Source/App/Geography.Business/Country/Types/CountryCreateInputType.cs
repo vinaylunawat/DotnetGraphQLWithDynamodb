@@ -1,4 +1,4 @@
-﻿using Geography.Business.State;
+﻿using Geography.Business.State.Types;
 using GraphQL.Types;
 
 namespace Geography.Business.Country.Types
@@ -11,7 +11,7 @@ namespace Geography.Business.Country.Types
             Field<NonNullGraphType<StringGraphType>>("name");
             Field<StringGraphType>("isoCode");
             Field<ContinentType> ("continent");
-            //Field<ListGraphType<StateCreateInputType>>("states");
+            Field<ListGraphType<StateCreateInputType>>("states");
         }
     }
 
@@ -24,7 +24,7 @@ namespace Geography.Business.Country.Types
             Field<StringGraphType>("name");
             Field<StringGraphType>("isoCode");
             Field<ContinentType>("continent");
-            //Field<ListGraphType<StateUpdateInputType>>("states");
+            Field<ListGraphType<StateUpdateInputType>>("states");
         }
     }
 }

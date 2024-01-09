@@ -8,7 +8,7 @@ namespace Geography.Business.State.Types
         {
             Name = "stateCreateInput";
             Field<NonNullGraphType<StringGraphType>>("name");
-            Field<IdGraphType>("countryId");
+            //Field<IdGraphType>("countryId");
         }
     }
 

@@ -5,13 +5,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Framework\Framework.DataAccess\Framework.DataAccess.csproj" />
-    <ProjectReference Include="..\..\Framework\Framework.Entity\Framework.Entity.csproj" />
-    <ProjectReference Include="..\Geography.Entity\Geography.Entity.csproj" />
+    <Compile Remove="Configuration\**" />
+    <EmbeddedResource Remove="Configuration\**" />
+    <EntityDeploy Remove="Configuration\**" />
+    <None Remove="Configuration\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Configuration\" />
+    <ProjectReference Include="..\..\Framework\Framework.DataAccess\Framework.DataAccess.csproj" />
+    <ProjectReference Include="..\..\Framework\Framework.Entity\Framework.Entity.csproj" />
+    <ProjectReference Include="..\Geography.Entity\Geography.Entity.csproj" />
   </ItemGroup>
 
   <ItemGroup>

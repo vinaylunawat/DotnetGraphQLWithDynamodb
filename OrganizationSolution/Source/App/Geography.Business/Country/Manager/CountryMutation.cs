@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using FluentValidation;
 using FluentValidation.Results;
 using Geography.Business.Country.Models;
 using Geography.Business.Country.Types;
@@ -7,10 +6,10 @@ using Geography.Business.Country.Validator;
 using Geography.Business.GraphQL;
 using Geography.Business.GraphQL.Model;
 using Geography.DataAccess.Repository;
-using Geography.Entity.Entities;
 using GraphQL;
 using GraphQL.Types;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Geography.Business.Country.Manager
@@ -55,15 +54,23 @@ namespace Geography.Business.Country.Manager
                 return null;
             }
 
-            //if (dbData != null)
-            //{
-            //    context.Errors.Add(new ExecutionError("Country already exists"));
-            //    return null;
-            //}
+            var countryEntity = _mapper.Map<Entity.Entities.Country>(country);
+            countryEntity.Id = Guid.NewGuid();
 
-            var dbEntity = _mapper.Map<Entity.Entities.Country>(country);
-            dbEntity.Id = Guid.NewGuid();
-            var addedCountry = await _countryRepository.CreateAsync(dbEntity, default).ConfigureAwait(false);
+            if (country.States.Any())
+            {
+                
+                var isSuccess = await _countryRepository.SaveTransactionData(countryEntity);
+                if (!isSuccess) {
+                    context.Errors.Add(new ExecutionError("Transacation failed to save data."));
+                }
+                else
+                {
+                    return _mapper.Map<CountryReadModel>(countryEntity);
+                }
+            }
+
+            var addedCountry = await _countryRepository.CreateAsync(countryEntity, default).ConfigureAwait(false);
             var result = _mapper.Map<CountryReadModel>(addedCountry);
             return result;
 
@@ -89,8 +96,24 @@ namespace Geography.Business.Country.Manager
                 return null;
             }
             var dbCountry = _mapper.Map<Entity.Entities.Country>(countryUpdateModel);
+
+            if (countryUpdateModel.States.Any())
+            {
+                var isSuccess = await _countryRepository.UpdateTransactionData(dbCountry).ConfigureAwait(false);
+                if (!isSuccess)
+                {
+                    context.Errors.Add(new ExecutionError("Transacation failed to update data."));
+                }
+                else
+                {
+                    return _mapper.Map<CountryReadModel>(dbCountry);
+
+                }
+            }
+
             var updatedCountry = await _countryRepository.UpdateAsync(dbCountry, default).ConfigureAwait(false);
-            return _mapper.Map<CountryReadModel>(updatedCountry);
+            var result = _mapper.Map<CountryReadModel>(updatedCountry);
+            return result;
 
         }
 

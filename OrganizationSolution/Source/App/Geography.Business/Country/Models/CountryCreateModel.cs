@@ -1,6 +1,6 @@
 ﻿using Geography.Business.Country.Types;
-using Geography.Business.Country.Validator;
-using System;
+using Geography.Business.State.Models;
+using System.Collections.Generic;
 
 namespace Geography.Business.Country.Models
 {
@@ -12,7 +12,7 @@ namespace Geography.Business.Country.Models
     {
         public CountryCreateModel()
         {
-            //States = new List<StateCreateModel>();            
+            States = new List<StateCreateModel>();            
         }
 
         public string Name { get; set; }
@@ -20,6 +20,6 @@ namespace Geography.Business.Country.Models
 
         public Continent Continent { get; set; }
 
-        //public IEnumerable<StateCreateModel> States { get; set; }
+        public IEnumerable<StateCreateModel> States { get; set; }
     }
 }

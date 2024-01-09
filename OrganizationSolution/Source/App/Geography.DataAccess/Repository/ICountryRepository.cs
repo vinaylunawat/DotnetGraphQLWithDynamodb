@@ -2,7 +2,6 @@
 {
     using Framework.DataAccess.Repository;
     using Geography.Entity.Entities;
-    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     /// <summary>
@@ -10,6 +9,8 @@
     /// </summary>
     public interface ICountryRepository : IGenericRepository<Country>
     {
-        Task RemoveCountryWithDependency(long countryId, IEnumerable<long> stateIds);
+        Task<bool> SaveTransactionData(Country country);
+
+        Task<bool> UpdateTransactionData(Country country);
     }
 }
