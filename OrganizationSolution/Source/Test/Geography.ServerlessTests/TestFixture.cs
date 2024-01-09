@@ -1,30 +1,34 @@
 ﻿using Framework.Configuration;
 using Framework.Configuration.Models;
+using Geography.Service;
+using GraphQL;
+using GraphQL.Types;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace Geography.ServerlessTests
 {
     /// <summary>
-    /// Defines the <see cref="TestSetup" />.
+    /// Defines the <see cref="TestFixture" />.
     /// </summary>
-    public class TestSetup<T>
+    public class TestFixture : IDisposable
     {
+        public GraphQLController _graphQLController;
         /// <summary>
-        /// The Main.
+        /// Controller TestFixture
         /// </summary>
-        /// <param name="args">The args<see cref="string[]"/>.</param>
-        public async Task<T> Main(string[] args)
+        public TestFixture()
         {
-            T obj;
-
+            string[] args = new string[0];
             var host = CreateHostBuilder(args).Build();
-
             var scope = host.Services.CreateScope();
             var services = scope.ServiceProvider;
-            obj = services.GetRequiredService<T>();
-            return obj;  
+            var schema = services.GetRequiredService<ISchema>();
+            var documentExecuter = services.GetRequiredService<IDocumentExecuter>();
+            var logger = services.GetRequiredService<ILogger<GraphQLController>>();
+            _graphQLController = new GraphQLController(schema, documentExecuter, logger);
         }
 
         /// <summary>
@@ -39,5 +43,10 @@ namespace Geography.ServerlessTests
             {
                 webBuilder.UseStartup<Startup>();
             });
+
+        public void Dispose()
+        {
+            Dispose();
+        }
     }
 }
