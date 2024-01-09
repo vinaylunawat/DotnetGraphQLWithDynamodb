@@ -35,7 +35,8 @@ jobs:
       working-directory: ./OrganizationSolution/Source/Test/Geography.ServerlessTests
       run: |
           ls
-          dotnet test Geography.ServerlessTests.csproj --env ASPNETCORE_ENVIRONMENT="Production"
+          dotnet test Geography.ServerlessTests.csproj --env ASPNETCORE_ENVIRONMENT="Production" --env AWSConfigurationOptions__UserPoolClientId="68ohnv3bhi64k08riiqfu1b1pk"
+          echo $AWSConfigurationOptions__UserPoolClientId
     - name: Deploy to Lambda
       working-directory: ./OrganizationSolution/Source/App/Geography.Serverless
       run: dotnet lambda deploy-serverless
