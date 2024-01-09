@@ -9,7 +9,7 @@ defaults:
     working-directory: ./OrganizationSolution/Source/App/Geography.Serverless
 
 jobs:
-  job1:
+  build:
     runs-on: ubuntu-latest
     env: 
       working-directory: ./OrganizationSolution/Source/App/Geography.Serverless
@@ -39,20 +39,14 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore Geography.Serverless.csproj
     - name: Build
-      run: dotnet build --no-restore Geography.Serverless.csproj
-  job2:
-    runs-on: ubuntu-latest
-    needs: job1
-    if: always()
-    steps:
+      run: dotnet build --no-restore Geography.Serverless.csproj         
     - name: test cases
       working-directory: ./OrganizationSolution/Source/Test/Geography.ServerlessTests
       run: dotnet test Geography.ServerlessTests.csproj --environment ASPNETCORE_ENVIRONMENT="Production"
-  job3:
+  deploy:
     runs-on: ubuntu-latest
-    needs: job2
-    if: always()
+    needs: build
+    if: ${{needs.build.results != 'success' }}
     steps:
-    - name: Deploy to Lambda
-      working-directory: ./OrganizationSolution/Source/App/Geography.Serverless
+    - name: Checkout Repository
       run: dotnet lambda deploy-serverless
