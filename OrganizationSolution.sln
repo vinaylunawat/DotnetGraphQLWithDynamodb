@@ -31,7 +31,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Geography.Serverless", "Org
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{6D855704-0385-48CF-8BC8-CC531E9203F4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Geography.ServerlessTests", "OrganizationSolution\Source\App\Geography.ServerlessTests\Geography.ServerlessTests.csproj", "{46E47B2E-47FB-4949-9184-4943162F7634}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Geography.ServerlessTests", "OrganizationSolution\Source\Test\Geography.ServerlessTests\Geography.ServerlessTests.csproj", "{46E47B2E-47FB-4949-9184-4943162F7634}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

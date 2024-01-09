@@ -22,9 +22,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\App\Geography.Serverless\Geography.Serverless.csproj" />
     <ProjectReference Include="..\..\Framework\Framework.Configuration\Framework.Configuration.csproj" />
-    <ProjectReference Include="..\..\Framework\Framework.Service\Framework.Service.csproj" />
-    <ProjectReference Include="..\Geography.Serverless\Geography.Serverless.csproj" />
+    <ProjectReference Include="..\..\Framework\Framework.Service\Framework.Service.csproj" />    
   </ItemGroup>
 
 </Project>
