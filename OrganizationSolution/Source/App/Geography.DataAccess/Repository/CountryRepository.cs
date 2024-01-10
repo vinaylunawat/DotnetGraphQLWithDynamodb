@@ -201,7 +201,32 @@
             }
             return result;
         }
+        public async Task<bool> GetDetailsbyAttributeName(string attributename, string attributevalue)
+        {
+            var request = new ScanRequest
+            {
+                TableName = "Country",
+                ExpressionAttributeNames = new Dictionary<string, string>
+                {
+                  { $"#{attributename}", attributename },
+                },
+                ExpressionAttributeValues = new Dictionary<string, AttributeValue>
+                {
+                    { ":name", new AttributeValue { S = attributevalue } },
+                },
+                FilterExpression = $"#{attributename} = :name",
+                ProjectionExpression = $"#{attributename}, Id",
+                Limit = 10
+            };
 
+            var response = _client.ScanAsync(request).Result;
+
+            if (response.Count > 0)
+            {
+                return true;
+            }
+            return false;
+        }
 
         //public async Task SaveTransactionData(Country country, IEnumerable<State> states)
         //{
