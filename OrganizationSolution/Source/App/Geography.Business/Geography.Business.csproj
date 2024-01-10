@@ -36,6 +36,7 @@
     <PackageReference Include="GraphQL.Server.Core" Version="5.2.2" />
     <PackageReference Include="GraphQL.Server.Transports.AspNetCore" Version="7.6.0" />
     <PackageReference Include="GraphQL.Server.Ui.Playground" Version="7.6.0" />
+    <PackageReference Include="GraphQL.Upload.AspNetCore" Version="3.0.3" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 

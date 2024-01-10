@@ -106,7 +106,7 @@ namespace Framework.Business.ServiceProvider.Storage
                     {
                         BucketName = amazonS3Configuration.BucketName,
                         Key = amazonS3Configuration.Prefix,
-                        Expires = DateTime.UtcNow.AddMinutes(1)
+                        Expires = DateTime.UtcNow.AddMinutes(amazonS3Configuration.PreSignedExpiresDays)
                     };
                     string urlString = await amazonS3Client.GetPreSignedURLAsync(preSrequest);
                     result.Add(key, urlString);

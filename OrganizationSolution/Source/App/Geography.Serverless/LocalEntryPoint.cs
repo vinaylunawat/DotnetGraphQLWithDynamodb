@@ -22,6 +22,9 @@ public class LocalEntryPoint
             var stateProvider = services.GetRequiredService<StateTableCreationProvider>();
             await stateProvider.Initialize("State");
 
+            var listOfFilesTableCreationProvider = services.GetRequiredService<ListOfFilesTableCreationProvider>();
+            await listOfFilesTableCreationProvider.Initialize("ListOfFiles");
+
         }
         await host.RunAsync();
     }

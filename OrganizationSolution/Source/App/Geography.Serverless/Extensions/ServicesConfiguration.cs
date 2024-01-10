@@ -83,6 +83,7 @@
         {
             services.AddTransient<CountryTableCreationProvider>();
             services.AddTransient<StateTableCreationProvider>();
+            services.AddTransient<ListOfFilesTableCreationProvider>();
             return services;
         }
     }

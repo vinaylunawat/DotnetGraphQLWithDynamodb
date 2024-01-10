@@ -18,6 +18,7 @@
 		<PackageReference Include="GraphQL.Authorization" Version="7.0.0" />
 		<PackageReference Include="GraphQL.MicrosoftDI" Version="7.7.2" />
 		<PackageReference Include="GraphQL.NewtonsoftJson" Version="7.7.2" />
+		<PackageReference Include="GraphQL.Upload.AspNetCore" Version="3.0.3" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.6" />
 		<PackageReference Include="Microsoft.IdentityModel.Protocols.OpenIdConnect" Version="7.0.3" />

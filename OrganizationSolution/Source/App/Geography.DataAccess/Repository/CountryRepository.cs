@@ -73,6 +73,30 @@
                 actions.Add(new TransactWriteItem() { Put = put });
             }
 
+            var listOfFilesData = new List<Put>();
+
+            foreach (var file in country.Files)
+            {
+                listOfFilesData.Add(new Put()
+                {
+                    TableName = "ListOfFiles",
+                    Item = new Dictionary<string, AttributeValue>
+                    {
+                        { "Id" , new AttributeValue{ S = Convert.ToString(Guid.NewGuid()) } },
+                        { "PreSignedUrl" , new AttributeValue{ S = file } },
+                        { "EntityId", new AttributeValue{S = countryId } },
+                    },
+                    ReturnValuesOnConditionCheckFailure = Amazon.DynamoDBv2.ReturnValuesOnConditionCheckFailure.ALL_OLD,
+                });
+            }
+
+            foreach (var put in listOfFilesData)
+            {
+                actions.Add(new TransactWriteItem() { Put = put });
+            }
+
+
+
             var transaction = new TransactWriteItemsRequest()
             {
                 TransactItems = actions,
@@ -201,25 +225,25 @@
             }
             return result;
         }
-        public async Task<bool> GetDetailsbyAttributeName(string attributename, string attributevalue)
+        public async Task<bool> GetDetailsByAttributeName(string attributeName, string attributeValue)
         {
             var request = new ScanRequest
             {
                 TableName = "Country",
                 ExpressionAttributeNames = new Dictionary<string, string>
                 {
-                  { $"#{attributename}", attributename },
+                  { $"#{attributeName}", attributeName },
                 },
                 ExpressionAttributeValues = new Dictionary<string, AttributeValue>
                 {
-                    { ":name", new AttributeValue { S = attributevalue } },
+                    { ":name", new AttributeValue { S = attributeValue } },
                 },
-                FilterExpression = $"#{attributename} = :name",
-                ProjectionExpression = $"#{attributename}, Id",
+                FilterExpression = $"#{attributeName} = :name",
+                ProjectionExpression = $"#{attributeName}, Id",
                 Limit = 10
             };
 
-            var response = _client.ScanAsync(request).Result;
+            var response = await _client.ScanAsync(request).ConfigureAwait(false);
 
             if (response.Count > 0)
             {
