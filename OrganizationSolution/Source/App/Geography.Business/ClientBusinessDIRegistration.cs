@@ -38,7 +38,7 @@
 
             services.AddGraphQL(b => b
             .AddGraphTypes(typeof(AppSchema).Assembly) // schema            
-                .AddSystemTextJson());
+                .AddSystemTextJson()).AddGraphQLUpload();
 
             return services;
         }

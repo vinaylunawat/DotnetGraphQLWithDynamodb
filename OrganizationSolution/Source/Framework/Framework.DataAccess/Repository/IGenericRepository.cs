@@ -1,9 +1,12 @@
 ﻿namespace Framework.DataAccess.Repository
 {
+    using Framework.Configuration.Models;
     using Framework.DataAccess.Model;
     using System.Collections.Generic;
+    using System.IO;
     using System.Threading;
     using System.Threading.Tasks;
+    using static Org.BouncyCastle.Math.EC.ECCurve;
 
     public interface IGenericRepository<TEntity>
     {
@@ -19,6 +22,8 @@
         Task<TEntity> UpdateAsync(TEntity entity, CancellationToken cancellationToken);
 
         Task DeleteAsync<TKey>(TKey key, CancellationToken cancellationToken);
+
+        Task<string> UploadFileAsync(AmazonS3ConfigurationOptions config, string fileName, Stream fileContent);
 
     }
 }

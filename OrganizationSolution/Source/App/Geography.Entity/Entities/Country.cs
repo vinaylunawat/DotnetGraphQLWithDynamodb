@@ -27,6 +27,9 @@
         [DynamoDBProperty("UpdatedDate")]
         public DateTime? UpdatedDate { get; set; }
 
+        [DynamoDBIgnore]
+        public IEnumerable<string> Files { get; set; }
+
     }
 
 }

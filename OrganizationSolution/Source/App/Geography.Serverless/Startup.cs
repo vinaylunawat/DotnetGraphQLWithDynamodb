@@ -44,7 +44,7 @@ public class Startup
         app.UseAuthentication();
         app.UseAuthorization();
 
-        app.UseGraphQL<AppSchema>();
+        app.UseGraphQLUpload<AppSchema>().UseGraphQL<AppSchema>();
         app.UseGraphQLPlayground(options: new GraphQL.Server.Ui.Playground.PlaygroundOptions());
 
         app.UseEndpoints(endpoints =>

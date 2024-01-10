@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FluentValidation.Results;
+using Framework.Configuration.Models;
 using Geography.Business.Country.Models;
 using Geography.Business.Country.Types;
 using Geography.Business.Country.Validator;
@@ -8,7 +9,13 @@ using Geography.Business.GraphQL.Model;
 using Geography.DataAccess.Repository;
 using GraphQL;
 using GraphQL.Types;
+using GraphQL.Upload.AspNetCore;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing.Constraints;
+using MimeKit;
 using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -19,18 +26,22 @@ namespace Geography.Business.Country.Manager
         private readonly ICountryRepository _countryRepository;
         private readonly CountryCreateModelValidator _countryCreateValidator;
         private readonly CountryUpdateModelValidator _countryUpdateValidator;
+        private readonly AmazonS3ConfigurationOptions _amazonS3Configuration;
         private readonly IMapper _mapper;
-        public CountryMutation(ICountryRepository countryRepository, CountryCreateModelValidator countryCreateValidator, CountryUpdateModelValidator countryUpdateValidator, IMapper mapper)
+        public CountryMutation(ICountryRepository countryRepository, CountryCreateModelValidator countryCreateValidator,
+                        CountryUpdateModelValidator countryUpdateValidator, ApplicationOptions options, IMapper mapper)
         {
             _countryRepository = countryRepository;
             _countryCreateValidator = countryCreateValidator;
             _countryUpdateValidator = countryUpdateValidator;
+            _amazonS3Configuration = options.amazons3ConfigurationOptions;
             _mapper = mapper;
         }
         public void RegisterField(ObjectGraphType graphType)
         {
             graphType.Field<CountryType>("CreateCountry")
                 .Argument<NonNullGraphType<CountryCreateInputType>>("country", "object of country")
+                .Argument<UploadGraphType>("file", "file to upload")
                 .ResolveAsync(async context => await ResolveCreateCountry(context).ConfigureAwait(false));
 
             graphType.Field<CountryType>("UpdateCountry")
@@ -45,11 +56,18 @@ namespace Geography.Business.Country.Manager
         private async Task<CountryReadModel> ResolveCreateCountry(IResolveFieldContext<object> context)
         {
             var country = context.GetArgument<CountryCreateModel>("country");
-            string attibutename = "Name";
-            var isExist = await _countryRepository.GetDetailsbyAttributeName(attibutename, country.Name).ConfigureAwait(false);
+            var file = context.GetArgument<IFormFile>("file");
+            var uploadedFiles = new List<string>();
+            using (Stream fileContent = file.OpenReadStream())
+            {
+                var fileName = await _countryRepository.UploadFileAsync(_amazonS3Configuration, file.FileName, fileContent).ConfigureAwait(false);
+                uploadedFiles.Add(fileName);
+            }
+            string attributeName = "Name";
+            var isExist = await _countryRepository.GetDetailsByAttributeName(attributeName, country.Name).ConfigureAwait(false);
             if (isExist)
             {
-                context.Errors.Add(new ExecutionError($"Country {attibutename} can not be duplicate."));
+                context.Errors.Add(new ExecutionError($"Country {attributeName} can not be duplicate."));
                 return null;
             }
 
@@ -61,23 +79,19 @@ namespace Geography.Business.Country.Manager
                 return null;
             }
             
-            var dbEntity = await _countryRepository.GetAll(default).ConfigureAwait(false);
-            if (dbEntity.Any(x=> x.Name == country.Name))
-            {
-                context.Errors.Add(new ExecutionError("Country name can not be duplicate."));
-                return null;
-            }
-
             var countryEntity = _mapper.Map<Entity.Entities.Country>(country);
             countryEntity.Id = Guid.NewGuid();
 
             if (country.States.Any())
             {
-
+                if (uploadedFiles.Any())
+                {
+                    countryEntity.Files = uploadedFiles;
+                }
                 var isSuccess = await _countryRepository.SaveTransactionData(countryEntity);
                 if (!isSuccess)
                 {
-                    context.Errors.Add(new ExecutionError("Transacation failed to save data."));
+                    context.Errors.Add(new ExecutionError("Transaction failed to save data."));
                 }
                 else
                 {

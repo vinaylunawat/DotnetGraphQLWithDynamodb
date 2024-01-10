@@ -27,4 +27,24 @@ namespace Geography.Business.Country.Types
             Field<ListGraphType<StateUpdateInputType>>("states");
         }
     }
+
+    public class File
+    {
+        public string Id { get; set; }
+        public string Name { get; set; }
+        public string MimeType { get; set; }
+        public string Path { get; set; }
+    }
+
+    public class FileGraphType : ObjectGraphType<File>
+    {
+        public FileGraphType()
+        {
+            Name = "FileInputType";
+            Field<StringGraphType>("id");
+            Field<StringGraphType>("name");
+            Field<StringGraphType>("mimetype");
+            Field<StringGraphType>("path");
+        }
+    }
 }
