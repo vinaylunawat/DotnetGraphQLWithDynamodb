@@ -55,13 +55,22 @@ namespace Geography.Business.Country.Manager
 
         private async Task<CountryReadModel> ResolveCreateCountry(IResolveFieldContext<object> context)
         {
+            bool isFileUploaded = false;
             var country = context.GetArgument<CountryCreateModel>("country");
             var file = context.GetArgument<IFormFile>("file");
-            var uploadedFiles = new List<string>();
-            using (Stream fileContent = file.OpenReadStream())
+            if (file != null)
             {
-                var fileName = await _countryRepository.UploadFileAsync(_amazonS3Configuration, file.FileName, fileContent).ConfigureAwait(false);
-                uploadedFiles.Add(fileName);
+                isFileUploaded = true;
+            }
+            var uploadedFiles = new List<string>();
+
+            if (isFileUploaded)
+            {
+                using (Stream fileContent = file.OpenReadStream())
+                {
+                    var fileName = await _countryRepository.UploadFileAsync(_amazonS3Configuration, file.FileName, fileContent).ConfigureAwait(false);
+                    uploadedFiles.Add(fileName);
+                }
             }
             string attributeName = "Name";
             var isExist = await _countryRepository.GetDetailsByAttributeName(attributeName, country.Name).ConfigureAwait(false);
@@ -78,13 +87,13 @@ namespace Geography.Business.Country.Manager
                 LoadErrors(context, validationResult);
                 return null;
             }
-            
+
             var countryEntity = _mapper.Map<Entity.Entities.Country>(country);
             countryEntity.Id = Guid.NewGuid();
 
             if (country.States.Any())
             {
-                if (uploadedFiles.Any())
+                if (isFileUploaded && uploadedFiles.Any())
                 {
                     countryEntity.Files = uploadedFiles;
                 }
