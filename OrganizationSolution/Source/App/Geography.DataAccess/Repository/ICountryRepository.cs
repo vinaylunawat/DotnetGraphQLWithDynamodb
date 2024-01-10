@@ -12,5 +12,7 @@
         Task<bool> SaveTransactionData(Country country);
 
         Task<bool> UpdateTransactionData(Country country);
+
+        Task<bool> GetDetailsbyAttributeName(string attributename, string attributevalue);
     }
 }
