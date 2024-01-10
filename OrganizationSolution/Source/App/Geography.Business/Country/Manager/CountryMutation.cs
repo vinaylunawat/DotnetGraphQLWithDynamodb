@@ -45,6 +45,13 @@ namespace Geography.Business.Country.Manager
         private async Task<CountryReadModel> ResolveCreateCountry(IResolveFieldContext<object> context)
         {
             var country = context.GetArgument<CountryCreateModel>("country");
+            string attibutename = "Name";
+            var isExist = await _countryRepository.GetDetailsbyAttributeName(attibutename, country.Name).ConfigureAwait(false);
+            if (isExist)
+            {
+                context.Errors.Add(new ExecutionError($"Country {attibutename} can not be duplicate."));
+                return null;
+            }
 
             var validationResult = _countryCreateValidator.Validate(country);
 
