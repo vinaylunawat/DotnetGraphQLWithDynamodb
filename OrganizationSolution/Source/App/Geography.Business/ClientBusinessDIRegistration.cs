@@ -1,20 +1,14 @@
 ﻿namespace Geography.Business
 {
+    using Geography.Business.Country.Manager;
+    using Geography.Business.Country.Types;
+    using Geography.Business.Country.Validator;
     using Geography.Business.GraphQL;
-    using Geography.Business.State;
-    using Geography.DataAccess;
     using global::GraphQL;
     using global::GraphQL.Types;
     //using Framework.Business;
     //using Geography.Business.Country;
     using Microsoft.Extensions.DependencyInjection;
-    using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
-    using GraphQL;
-    using Geography.Business.Country.Models;
-    using Framework.Business;
-    using Geography.Business.Country.Manager;
-    using Geography.Business.Country.Types;
-    using Geography.Business.Country.Validator;
 
     /// <summary>
     /// Defines the <see cref="ClientBusinessDIRegistration" />.
