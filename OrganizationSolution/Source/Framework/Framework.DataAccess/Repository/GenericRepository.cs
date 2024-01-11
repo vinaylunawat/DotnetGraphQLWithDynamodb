@@ -121,12 +121,13 @@
                     }
                     else
                     {
-                        //throw new Exception($"error occured with http status code {response.HttpStatusCode} while uploading a file");
+                        Console.WriteLine($"error occurred with http status code {response.HttpStatusCode} while uploading a file");
                         return null;
                     }
                 }
                 catch (Exception ex)
                 {
+                    Console.WriteLine(ex.ToString());
                     return null;
                 }
                 

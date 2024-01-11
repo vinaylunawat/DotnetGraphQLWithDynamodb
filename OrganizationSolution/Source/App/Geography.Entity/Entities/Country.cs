@@ -12,6 +12,10 @@
     [DynamoDBTable("Country")]
     public class Country : EntityWithId<Guid>
     {
+        public Country()
+        {
+            Files = new List<string>();
+        }
         [DynamoDBProperty("Name")]
         public string Name { get; set; }
 
